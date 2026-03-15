@@ -711,7 +711,14 @@ function EspInterface.getTeamColor(player)
 end
 
 function EspInterface.getCharacter(player)
-	return player.Character;
+	--return player.Character;
+	    for _, obj in pairs(workspace:GetChildren()) do
+        if obj:IsA("Model") then
+            local hrp = obj:FindFirstChild("HumanoidRootPart")
+
+            if hrp then return else repeat end
+        end
+    end
 end
 
 function EspInterface.getHealth(player)
