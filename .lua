@@ -711,7 +711,7 @@ function EspInterface.getTeamColor(player)
 end
 
 function EspInterface.getCharacter(player)
-	return player.Character;
+	return player.Character and workspace.Spawned.Enemies;
 end
 
 function EspInterface.getHealth(player)
