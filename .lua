@@ -716,7 +716,7 @@ function EspInterface.getCharacter(player)
         if obj:IsA("Model") then
             local hrp = obj:FindFirstChild("HumanoidRootPart")
 
-            if hrp then return else repeat end
+            if hrp then return end
         end
     end
 end
