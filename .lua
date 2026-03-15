@@ -677,6 +677,34 @@ function EspInterface.Load()
 		createObject(plrs[i]);
 	end
 
+	-- npc esp
+local spawned = findFirstChild(workspace, "Spawned");
+local enemies = spawned and findFirstChild(spawned, "Enemies");
+
+if enemies then
+	local function addEnemy(enemy)
+		EspInterface.AddInstance(enemy, {
+			text = "{name} [{distance}]",
+			textColor = { Color3.new(1,0.3,0.3), 1 }
+		});
+	end
+
+	local function removeEnemy(enemy)
+		local cache = EspInterface._objectCache;
+		if cache[enemy] then
+			cache[enemy][1]:Destruct();
+			cache[enemy] = nil;
+		end
+	end
+
+	for _, enemy in next, getChildren(enemies) do
+		addEnemy(enemy);
+	end
+
+	enemies.ChildAdded:Connect(addEnemy);
+	enemies.ChildRemoved:Connect(removeEnemy);
+end
+
 	EspInterface.playerAdded = players.PlayerAdded:Connect(createObject);
 	EspInterface.playerRemoving = players.PlayerRemoving:Connect(removeObject);
 	EspInterface._hasLoaded = true;
@@ -711,7 +739,7 @@ function EspInterface.getTeamColor(player)
 end
 
 function EspInterface.getCharacter(player)
-	return player.Character and workspace.Spawned.Enemies;
+	return player.Character;
 end
 
 function EspInterface.getHealth(player)
